@@ -1,10 +1,17 @@
 import styled from "styled-components";
 
-export const ProjectCard = () => {
+type ProjectCardProps = {
+    title: string
+    description?: string
+    taskCount: number
+}
+
+export const ProjectCard = ({title, description='Описание пока не добавлено', taskCount}: ProjectCardProps) => {
     return(
         <Article>
-            <h3>Изучение React</h3>
-            <p>Первый учебный проект</p>
+            <h3>{title}</h3>
+            <p>{description}</p>
+            <p>Задач: {taskCount}</p>
         </Article>
     )
 }

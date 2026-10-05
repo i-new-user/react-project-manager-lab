@@ -25,15 +25,53 @@ const Title = styled.h2`
 `;
 
 
+type Project = {
+  id: string;
+  title: string;
+  description?: string;
+  taskCount: number;
+};
+
+const projects: Project[] = [
+  {
+    id: 'react',
+    title: 'Изучение React',
+    description: 'Первый учебный проект',
+    taskCount: 5,
+  },
+  {
+    id: 'node',
+    title: 'Изучение Node.js',
+    taskCount: 0,
+  },
+  {
+    id: 'typescript',
+    title: 'Изучение TypeScript',
+    taskCount: 3,
+  },
+  {
+    id: 'mongodb',
+    title: 'Изучение Mongodb',
+    description: 'Первый учебный проект',
+    taskCount: 5,
+  },
+];
+
+
 export function ProjectList() {
   return (
     <Section aria-labelledby="projects-heading">
       <Title id="projects-heading">Проекты</Title>
 
       <CardsGrid>
-        <ProjectCard title='Изучение React' description='Первый учебный проект' taskCount={5}/>
-        <ProjectCard title='Изучение Node js' taskCount={0}/>
-        <ProjectCard title='Изучение Typescript' taskCount={0} hidden={true}/>
+        {projects.map((project) => (
+          <ProjectCard
+            key={project.id}
+            title={project.title}
+            description={project.description}
+            taskCount={project.taskCount}
+          />
+        ))}
       </CardsGrid>
     </Section>
   );

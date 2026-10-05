@@ -33,7 +33,7 @@ export function ProjectList() {
       <CardsGrid>
         <ProjectCard title='Изучение React' description='Первый учебный проект' taskCount={5}/>
         <ProjectCard title='Изучение Node js' taskCount={0}/>
-        <ProjectCard title='Изучение Typescript' taskCount={0}/>
+        <ProjectCard title='Изучение Typescript' taskCount={0} hidden={true}/>
       </CardsGrid>
     </Section>
   );

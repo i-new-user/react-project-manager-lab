@@ -4,14 +4,21 @@ type ProjectCardProps = {
     title: string
     description?: string
     taskCount: number
+    hidden?: boolean
 }
 
-export const ProjectCard = ({title, description='Описание пока не добавлено', taskCount}: ProjectCardProps) => {
+export const ProjectCard = ({title, description='Описание пока не добавлено', taskCount, hidden=false}: ProjectCardProps) => {
+
+    if(hidden){
+        return null
+    }
+    
     return(
         <Article>
             <h3>{title}</h3>
             <p>{description}</p>
-            <p>Задач: {taskCount}</p>
+            <p>{taskCount > 0 ? `Задач: ${taskCount}` : `Задач пока нет`}</p>
+            {taskCount > 0 && <p>Есть активные задачи</p>}
         </Article>
     )
 }

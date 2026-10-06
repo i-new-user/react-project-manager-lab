@@ -8,9 +8,11 @@ type ProjectCardProps = {
     taskCount: number
     hidden?: boolean
     onOpen: () => void
+    onDelete: () => void
+    onAddTask: () => void;
 }
 
-export const ProjectCard = ({title, description='Описание пока не добавлено', taskCount, hidden=false, onOpen}: ProjectCardProps) => {
+export const ProjectCard = ({title, description='Описание пока не добавлено', taskCount, hidden=false, onOpen, onDelete, onAddTask}: ProjectCardProps) => {
 
     const [isDescriptionVisible, setIsDescriptionVisible] = useState(true);
     const [clickCount, setClickCount] = useState(0);
@@ -28,8 +30,6 @@ export const ProjectCard = ({title, description='Описание пока не 
     return(
         <Article>
             <h3>{title}</h3>
-            
-            {isDescriptionVisible && <p>{description}</p>}
 
             <p>{taskCount > 0 ? `Задач: ${taskCount}` : `Задач пока нет`}</p>
             {isDescriptionVisible && <p>{description}</p>}
@@ -44,6 +44,10 @@ export const ProjectCard = ({title, description='Описание пока не 
             <Button type="button" onClick={() => { setClickCount((clickCount) => clickCount + 1)}}>
                 plus
             </Button>
+
+            <Button type="button" onClick={onDelete}>Удалить проект</Button>
+
+            <Button type="button" onClick={onAddTask}>Добавить задачу</Button>
 
         </Article>
     )

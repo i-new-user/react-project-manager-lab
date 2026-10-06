@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ProjectCard } from './ProjectCard';
+import { useState } from 'react';
 
 const Section = styled.section`
   min-width: 0;
@@ -32,7 +33,7 @@ type Project = {
   taskCount: number;
 };
 
-const projects: Project[] = [
+const initialProjects: Project[] = [
   {
     id: 'react',
     title: 'Изучение React',
@@ -60,13 +61,41 @@ const projects: Project[] = [
 
 export function ProjectList() {
 
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
+
   const handleOpenProject = (projectId: string) => {
     alert(`Открываем проект с id: ${projectId}`)
   }
 
+  const handleAddProject = () => {
+    const newProject: Project = {
+      id: crypto.randomUUID(),
+      title: 'Новый проект',
+      taskCount: 0,
+    }
+    setProjects((previous) => [...previous, newProject])
+  }
+
+  const handleDeleteProject = (projectId: string) => {
+    setProjects((previous) => previous.filter((project) => project.id !== projectId));
+  };
+
+  const handleAddTask = (projectId: string) => {
+    setProjects((previous) =>
+      previous.map((project) =>
+        project.id === projectId
+          ? { ...project, taskCount: project.taskCount + 1 }
+          : project
+      )
+    );
+  };
+
   return (
     <Section aria-labelledby="projects-heading">
+
       <Title id="projects-heading">Проекты</Title>
+
+      <button type="button" onClick={handleAddProject}>Добавить проект</button>
 
       <CardsGrid>
         {projects.map((project) => (
@@ -76,6 +105,8 @@ export function ProjectList() {
             description={project.description}
             taskCount={project.taskCount}
             onOpen={() => handleOpenProject(project.id)}
+            onDelete={() => handleDeleteProject(project.id)}
+            onAddTask={() => handleAddTask(project.id)}
           />
         ))}
       </CardsGrid>

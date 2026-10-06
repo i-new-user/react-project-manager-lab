@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { ProjectCard } from './ProjectCard';
 import { useState } from 'react';
+import { ProjectSearch } from './ProjectSearch';
+
 
 const Section = styled.section`
   min-width: 0;
@@ -62,6 +64,7 @@ const initialProjects: Project[] = [
 export function ProjectList() {
 
   const [projects, setProjects] = useState<Project[]>(initialProjects);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleOpenProject = (projectId: string) => {
     alert(`Открываем проект с id: ${projectId}`)
@@ -90,15 +93,25 @@ export function ProjectList() {
     );
   };
 
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+
+  const filteredProjects = projects.filter((project) =>
+    project.title.toLowerCase().includes(normalizedQuery)
+  );
+
   return (
     <Section aria-labelledby="projects-heading">
 
       <Title id="projects-heading">Проекты</Title>
 
+      <ProjectSearch value={searchQuery} onValueChange={setSearchQuery}/>
+
       <button type="button" onClick={handleAddProject}>Добавить проект</button>
 
+      {filteredProjects.length === 0 && ( <p role="status">Проекты не найдены</p> )}
+
       <CardsGrid>
-        {projects.map((project) => (
+        {filteredProjects.map((project) => (
           <ProjectCard
             key={project.id}
             title={project.title}

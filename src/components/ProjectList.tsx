@@ -59,6 +59,11 @@ const projects: Project[] = [
 
 
 export function ProjectList() {
+
+  const handleOpenProject = (projectId: string) => {
+    alert(`Открываем проект с id: ${projectId}`)
+  }
+
   return (
     <Section aria-labelledby="projects-heading">
       <Title id="projects-heading">Проекты</Title>
@@ -70,6 +75,7 @@ export function ProjectList() {
             title={project.title}
             description={project.description}
             taskCount={project.taskCount}
+            onOpen={() => handleOpenProject(project.id)}
           />
         ))}
       </CardsGrid>
